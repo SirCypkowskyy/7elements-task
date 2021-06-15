@@ -131,7 +131,10 @@ public class LevelController : MonoBehaviour
         {
             agentNameText.text = "Agent Name:";
             agentHealthText.text = "Agent Health:";
-            lastClickedAgent.GetComponent<AgentController>().iWasClicked = false;
+            if (lastClickedAgent && lastClickedAgent.GetComponent<AgentController>().iWasClicked)
+            {
+                lastClickedAgent.GetComponent<AgentController>().iWasClicked = false;
+            }
         }
     }
 }

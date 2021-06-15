@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class LevelController : MonoBehaviour
     [Header("Board")]
     [SerializeField] private GameObject boardOnScene;
     [Header("UI Fields")]
+    [SerializeField] private GameObject numbersGenerationTable;
+    [SerializeField] private Text generationTableText;
     [SerializeField] private Text agentNameText;
     [SerializeField] private Text agentHealthText;
     [Header("New agent appearence time setup")]
@@ -32,6 +35,8 @@ public class LevelController : MonoBehaviour
     //Current ammount of agents on scene
     private int ammountOfAgentsOnScene = 0;
 
+    //Bool for checking if numbers were generated
+    private bool numbersWereGenerated = false;
     #endregion
 
     #region LevelController Instance Setup
@@ -136,5 +141,12 @@ public class LevelController : MonoBehaviour
                 lastClickedAgent.GetComponent<AgentController>().iWasClicked = false;
             }
         }
+    }
+
+   
+
+    public void CloseTextBox()
+    {
+        numbersGenerationTable.SetActive(false);
     }
 }

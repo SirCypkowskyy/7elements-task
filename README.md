@@ -1,2 +1,2 @@
 # 7elements-task
-Repository for a task from 7elements.
+Repository for a task ordered by 7elements.

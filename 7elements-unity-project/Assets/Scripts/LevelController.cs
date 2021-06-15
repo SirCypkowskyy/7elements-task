@@ -143,10 +143,62 @@ public class LevelController : MonoBehaviour
         }
     }
 
-   
-
     public void CloseTextBox()
     {
         numbersGenerationTable.SetActive(false);
+    }
+
+    public void GenerateNumbers()
+    {
+        numbersGenerationTable.SetActive(true);
+        if (!numbersWereGenerated)
+        {
+            string newText = "";
+            for (int i = 1; i <= 100; i++)
+            {
+                int[] numberArray = GetArrayOfDigits(i);
+                int internalScore = 0;
+                foreach (int charNumber in numberArray)
+                {
+                    internalScore += charNumber;
+                }
+                if (i == 1)
+                {
+                    newText += "1";
+                }
+                else if (internalScore % 3 == 0 && (numberArray[numberArray.Length - 1] == 0 || numberArray[numberArray.Length - 1] == 5))
+                {
+                    newText += "\nMarkoPolo";
+                }
+                else if (internalScore % 3 == 0)
+                {
+                    newText += "\nMarko";
+                }
+                else if (numberArray[numberArray.Length - 1] == 0 || numberArray[numberArray.Length - 1] == 5)
+                {
+                    newText += "\nPolo";
+                }
+                else
+                {
+                    newText += $"\n{i}";
+                }
+            }
+            generationTableText.text = newText;
+            numbersWereGenerated = true;
+        }
+    }
+
+    private static int[] GetArrayOfDigits(int n)
+    {
+        if (n == 0) return new int[1] { 0 };
+
+        var digits = new List<int>();
+
+        for (; n != 0; n /= 10)
+            digits.Add(n % 10);
+
+        var arr = digits.ToArray();
+        System.Array.Reverse(arr);
+        return arr;
     }
 }

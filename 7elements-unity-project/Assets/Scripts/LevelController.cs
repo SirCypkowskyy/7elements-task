@@ -8,7 +8,7 @@ public class LevelController : MonoBehaviour
 {
     #region Level Parameters
 
-    private GameObject lastClickedAgent;
+    public GameObject lastClickedAgent;
 
     [Header("Used agent prefab")]
     [SerializeField] private GameObject agentPrefab;
@@ -126,8 +126,13 @@ public class LevelController : MonoBehaviour
                 {
                     lastClickedAgent.GetComponent<AgentController>().iWasClicked = false;
                 }
-                agentNameText.text = $"Agent Name:\n{hit.collider.gameObject.name}";
-                agentHealthText.text = $"Agent Health:\n{hit.collider.gameObject.GetComponent<AgentController>().GetAgentHealth()}";
+
+                // <-- Deprecated -->
+                //agentNameText.text = $"Agent Name:\n{hit.collider.gameObject.name}";
+                //agentHealthText.text = $"Agent Health:\n{hit.collider.gameObject.GetComponent<AgentController>().GetAgentHealth()}";
+                // <-- Deprecated -->
+
+                ReloadAgentUIData(hit.collider.gameObject.name, hit.collider.gameObject.GetComponent<AgentController>().GetAgentHealth().ToString());
                 lastClickedAgent = hit.collider.gameObject;
                 lastClickedAgent.GetComponent<AgentController>().iWasClicked = true;
             }
@@ -142,6 +147,13 @@ public class LevelController : MonoBehaviour
             }
         }
     }
+
+    public void ReloadAgentUIData(string agentName, string agentHealth)
+    {
+        agentNameText.text = $"Agent Name:\n{agentName}";
+        agentHealthText.text = $"Agent Health:\n{agentHealth}";
+    }
+
 
     public void CloseTextBox()
     {

@@ -737,9 +737,9 @@ MonoBehaviour:
   generationTableText: {fileID: 219190670}
   agentNameText: {fileID: 1038004774}
   agentHealthText: {fileID: 720915430}
-  newAgentMinEmergeneTime: 3.55
-  newAgentMaxEmergenceTime: 7.43
-  maxAmmountofAgentsOnLevel: 2
+  newAgentMinEmergeneTime: 2.84
+  newAgentMaxEmergenceTime: 8.39
+  maxAmmountofAgentsOnLevel: 30
 --- !u!4 &534502023
 Transform:
   m_ObjectHideFlags: 0

@@ -58,11 +58,15 @@ public class AgentController : MonoBehaviour
                 OneSecondUpdate();
             }
         }
-        if (!iWasHit && iWasClicked)
+        if (iWasClicked)
         {
             agentRenderer.material.color = Color.green;
         }
-        else if(!iWasHit && agentRenderer.material.color != agentColor)
+        else if (iWasHit)
+        {
+            agentRenderer.material.color = Color.red;
+        }
+        else if(agentRenderer.material.color != agentColor)
         {
             agentRenderer.material.color = agentColor;
         }
@@ -105,8 +109,11 @@ public class AgentController : MonoBehaviour
         {
             LoseHealth();
             //Debug.Log($"{gameObject.name} lost one health point.\nCurrent health: {agentHealth}");
-            agentRenderer.material.color = Color.red;
             iWasHit = true;
+            if (LevelController.instance.lastClickedAgent == this.gameObject)
+            {
+                LevelController.instance.ReloadAgentUIData(gameObject.name, GetAgentHealth().ToString());
+            }
             StartCoroutine(ChangeToNormalColor());
         }
     }

@@ -21,6 +21,9 @@ public class LevelController : MonoBehaviour
 
     //Spawn another agent
     private float timeToSpawnNewAgent;
+
+    //Current ammount of agents on scene
+    private int ammountOfAgentsOnScene = 0;
     #endregion
 
     #region LevelController Instance Setup
@@ -58,32 +61,38 @@ public class LevelController : MonoBehaviour
 
     private void DetermineBoardSize()
     {
-        boardSizeX = boardOnScene.transform.position.x;
-        boardSizeZ = boardOnScene.transform.position.z;
+        boardSizeX = boardOnScene.transform.localScale.x;
+        boardSizeZ = boardOnScene.transform.localScale.z;
     }
 
     public float[] ReturnBoardSize()
     {
         float[] localList = new float[2];
-        localList[0] = boardSizeX;
-        localList[1] = boardSizeZ;
+        localList[0] = boardSizeX/2;
+        localList[1] = boardSizeZ/2;
         return localList;
     }
 
     private void Update()
     {
-        if (timeToSpawnNewAgent > 0)
+        if (maxAmmountofAgentsOnLevel > ammountOfAgentsOnScene)
         {
-            timeToSpawnNewAgent -= Time.deltaTime;
-        }
-        else
-        {
-            SpawnNewAgent();
+            if (timeToSpawnNewAgent > 0)
+            {
+                timeToSpawnNewAgent -= Time.deltaTime;
+            }
+            else
+            {
+                SpawnNewAgent();
+            }
         }
     }
 
     private void SpawnNewAgent()
     {
-        throw new System.NotImplementedException();
+        GameObject clone = Instantiate(agentPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity);
+        ammountOfAgentsOnScene += 1;
+        clone.name = $"Agent_{ammountOfAgentsOnScene}";
+        timeToSpawnNewAgent = Random.Range(newAgentMinEmergeneTime, newAgentMaxEmergenceTime);
     }
 }

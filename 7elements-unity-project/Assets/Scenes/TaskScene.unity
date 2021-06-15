@@ -156,7 +156,7 @@ MonoBehaviour:
   boardOnScene: {fileID: 980365804}
   newAgentMinEmergeneTime: 3.55
   newAgentMaxEmergenceTime: 7.43
-  maxAmmountofAgentsOnLevel: 0
+  maxAmmountofAgentsOnLevel: 2
 --- !u!4 &534502023
 Transform:
   m_ObjectHideFlags: 0

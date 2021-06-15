@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class LevelController : MonoBehaviour
     [SerializeField] private GameObject agentPrefab;
     [Header("Board")]
     [SerializeField] private GameObject boardOnScene;
+    [Header("UI Fields")]
+    [SerializeField] private Text agentNameText;
+    [SerializeField] private Text agentHealthText;
     [Header("New agent appearence time setup")]
     [Range(2, 10)] [SerializeField] private float newAgentMinEmergeneTime; 
     [Range(2, 10)][SerializeField] private float newAgentMaxEmergenceTime; 
@@ -94,5 +98,25 @@ public class LevelController : MonoBehaviour
         ammountOfAgentsOnScene += 1;
         clone.name = $"Agent_{ammountOfAgentsOnScene}";
         timeToSpawnNewAgent = Random.Range(newAgentMinEmergeneTime, newAgentMaxEmergenceTime);
+    }
+
+    private void CheckIfAgentClicked()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        float maxRaycastDistance = 1000f;
+        if (Physics.Raycast(ray, out hit, maxRaycastDistance))
+        {
+            if (hit.collider.tag == "LevelAgent")
+            {
+                agentNameText.text = $"Agent Name:\n{hit.collider.gameObject.name}";
+                agentHealthText.text = $"Agent Health:\n{hit.collider.gameObject.GetComponent<AgentController>().GetAgentHealth()}";
+            }
+        }
+        else
+        {
+            agentNameText.text = "Agent Name:";
+            agentHealthText.text = "Agent Health:";
+        }
     }
 }

@@ -295,6 +295,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentPrefab: {fileID: 7604547288324979216, guid: fc2a422cb19c58d4d8f71ac83eaf5aba, type: 3}
   boardOnScene: {fileID: 980365804}
+  agentNameText: {fileID: 1038004774}
+  agentHealthText: {fileID: 720915430}
   newAgentMinEmergeneTime: 3.55
   newAgentMaxEmergenceTime: 7.43
   maxAmmountofAgentsOnLevel: 2

@@ -16,6 +16,8 @@ public class AgentController : MonoBehaviour
 
     private float oneSecondUpdateTimer = 1f;
     private bool changedStartingPosition = false;
+    public bool iWasClicked = false;
+    private bool iWasHit = false;
     #endregion
 
     private void Awake()
@@ -55,6 +57,14 @@ public class AgentController : MonoBehaviour
             {
                 OneSecondUpdate();
             }
+        }
+        if (!iWasHit && iWasClicked)
+        {
+            agentRenderer.material.color = Color.green;
+        }
+        else if(!iWasHit && agentRenderer.material.color != agentColor)
+        {
+            agentRenderer.material.color = agentColor;
         }
     }
 
@@ -96,14 +106,16 @@ public class AgentController : MonoBehaviour
             LoseHealth();
             //Debug.Log($"{gameObject.name} lost one health point.\nCurrent health: {agentHealth}");
             agentRenderer.material.color = Color.red;
+            iWasHit = true;
             StartCoroutine(ChangeToNormalColor());
         }
     }
 
-    public void LoseHealth()
+    private void LoseHealth()
     {
         agentHealth -= 1;
     }
+
 
     public int GetAgentHealth()
     {
@@ -113,7 +125,7 @@ public class AgentController : MonoBehaviour
     IEnumerator ChangeToNormalColor()
     {
         yield return new WaitForSeconds(3);
-        agentRenderer.material.color = agentColor;
+        iWasHit = false;
     }
 
 

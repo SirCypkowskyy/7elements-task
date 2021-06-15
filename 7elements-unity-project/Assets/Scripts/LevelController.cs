@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class LevelController : MonoBehaviour
 {
     #region Level Parameters
+
+    private GameObject lastClickedAgent;
+
     [Header("Used agent prefab")]
     [SerializeField] private GameObject agentPrefab;
     [Header("Board")]
@@ -28,6 +31,7 @@ public class LevelController : MonoBehaviour
 
     //Current ammount of agents on scene
     private int ammountOfAgentsOnScene = 0;
+
     #endregion
 
     #region LevelController Instance Setup
@@ -90,6 +94,10 @@ public class LevelController : MonoBehaviour
                 SpawnNewAgent();
             }
         }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            CheckIfAgentClicked();
+        }
     }
 
     private void SpawnNewAgent()
@@ -109,14 +117,21 @@ public class LevelController : MonoBehaviour
         {
             if (hit.collider.tag == "LevelAgent")
             {
+                if (lastClickedAgent)
+                {
+                    lastClickedAgent.GetComponent<AgentController>().iWasClicked = false;
+                }
                 agentNameText.text = $"Agent Name:\n{hit.collider.gameObject.name}";
                 agentHealthText.text = $"Agent Health:\n{hit.collider.gameObject.GetComponent<AgentController>().GetAgentHealth()}";
+                lastClickedAgent = hit.collider.gameObject;
+                lastClickedAgent.GetComponent<AgentController>().iWasClicked = true;
             }
         }
         else
         {
             agentNameText.text = "Agent Name:";
             agentHealthText.text = "Agent Health:";
+            lastClickedAgent.GetComponent<AgentController>().iWasClicked = false;
         }
     }
 }

@@ -72,6 +72,9 @@ public class AgentController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Update method that executes every second
+    /// </summary>
     private void OneSecondUpdate()
     {
         if (thisNavMeshAgent.remainingDistance <= destinationTolerance || thisNavMeshAgent.pathStatus == NavMeshPathStatus.PathComplete)
@@ -82,6 +85,11 @@ public class AgentController : MonoBehaviour
         oneSecondUpdateTimer = 1f;
     }
 
+    /// <summary>
+    /// A method that finds a new Vector3 position for an agent
+    /// </summary>
+    /// <param name="oldPosition">Previous agent position</param>
+    /// <returns></returns>
     private Vector3 FindNewDestination(Vector3 oldPosition)
     {
         float[] board_size = LevelController.instance.ReturnBoardSize();
@@ -112,23 +120,32 @@ public class AgentController : MonoBehaviour
             iWasHit = true;
             if (LevelController.instance.lastClickedAgent == this.gameObject)
             {
-                LevelController.instance.ReloadAgentUIData(gameObject.name, GetAgentHealth().ToString());
+                LevelController.instance.ReloadAgentUI(gameObject.name, GetAgentHealth().ToString());
             }
             StartCoroutine(ChangeToNormalColor());
         }
     }
 
+    /// <summary>
+    /// A method that takes 1 HP point from the agent's "agentHealth" variable
+    /// </summary>
     private void LoseHealth()
     {
         agentHealth -= 1;
     }
 
-
+    /// <summary>
+    /// A method that returns the "agentHealth" value
+    /// </summary>
+    /// <returns></returns>
     public int GetAgentHealth()
     {
         return agentHealth;
     }
-
+    /// <summary>
+    /// Method to change agent "iWasHit" status back to normal (false) after 3 seconds
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ChangeToNormalColor()
     {
         yield return new WaitForSeconds(3);

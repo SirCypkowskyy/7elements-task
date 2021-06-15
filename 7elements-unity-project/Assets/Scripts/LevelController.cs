@@ -72,12 +72,19 @@ public class LevelController : MonoBehaviour
         timeToSpawnNewAgent = Random.Range(newAgentMinEmergeneTime, newAgentMaxEmergenceTime);
     }
 
+    /// <summary>
+    /// Checks size of the board
+    /// </summary>
     private void DetermineBoardSize()
     {
         boardSizeX = boardOnScene.transform.localScale.x;
         boardSizeZ = boardOnScene.transform.localScale.z;
     }
 
+    /// <summary>
+    /// Returns the size of the board
+    /// </summary>
+    /// <returns>Returns a float array based on recived data</returns>
     public float[] ReturnBoardSize()
     {
         float[] localList = new float[2];
@@ -104,7 +111,9 @@ public class LevelController : MonoBehaviour
             CheckIfAgentClicked();
         }
     }
-
+    /// <summary>
+    /// Spawns new agent on the board
+    /// </summary>
     private void SpawnNewAgent()
     {
         GameObject clone = Instantiate(agentPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity);
@@ -113,6 +122,9 @@ public class LevelController : MonoBehaviour
         timeToSpawnNewAgent = Random.Range(newAgentMinEmergeneTime, newAgentMaxEmergenceTime);
     }
 
+    /// <summary>
+    /// Checks if this agent was clicked by user
+    /// </summary>
     private void CheckIfAgentClicked()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -132,7 +144,7 @@ public class LevelController : MonoBehaviour
                 //agentHealthText.text = $"Agent Health:\n{hit.collider.gameObject.GetComponent<AgentController>().GetAgentHealth()}";
                 // <-- Deprecated -->
 
-                ReloadAgentUIData(hit.collider.gameObject.name, hit.collider.gameObject.GetComponent<AgentController>().GetAgentHealth().ToString());
+                ReloadAgentUI(hit.collider.gameObject.name, hit.collider.gameObject.GetComponent<AgentController>().GetAgentHealth().ToString());
                 lastClickedAgent = hit.collider.gameObject;
                 lastClickedAgent.GetComponent<AgentController>().iWasClicked = true;
             }
@@ -147,19 +159,28 @@ public class LevelController : MonoBehaviour
             }
         }
     }
-
-    public void ReloadAgentUIData(string agentName, string agentHealth)
+    /// <summary>
+    /// Reloads the UI text fields for showing agent data
+    /// </summary>
+    /// <param name="agentName">Agent's name (in string)</param>
+    /// <param name="agentHealth">Agent's health value (in string)</param>
+    public void ReloadAgentUI(string agentName, string agentHealth)
     {
         agentNameText.text = $"Agent Name:\n{agentName}";
         agentHealthText.text = $"Agent Health:\n{agentHealth}";
     }
 
-
+    /// <summary>
+    /// Closes UI text box
+    /// </summary>
     public void CloseTextBox()
     {
         numbersGenerationTable.SetActive(false);
     }
 
+    /// <summary>
+    /// Opens UI text box and generates 100-number sequence (only first time)
+    /// </summary>
     public void GenerateNumbers()
     {
         numbersGenerationTable.SetActive(true);
@@ -200,6 +221,11 @@ public class LevelController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Replaces given number for an array of digits
+    /// </summary>
+    /// <param name="n">Given number (int)</param>
+    /// <returns>int[] array of digits</returns>
     private static int[] GetArrayOfDigits(int n)
     {
         if (n == 0) return new int[1] { 0 };
